@@ -18,7 +18,7 @@ interface OyezCase {
 export default function DocketPage() {
   const [cases, setCases] = useState<OyezCase[]>([]);
   const [loading, setLoading] = useState(true);
-  const currentTerm = new Date().getFullYear();
+  const currentTerm = "2025";
 
   useEffect(() => {
     setLoading(true);
@@ -38,7 +38,7 @@ export default function DocketPage() {
           Current Docket
         </h1>
         <p className="mt-2 text-ink/70">
-          Cases on the {currentTerm}–{currentTerm + 1} term. Follow cases to track
+          Cases on the {currentTerm}–{Number(currentTerm) + 1} term. Follow cases to track
           oral arguments, decisions, and opinions.
         </p>
       </div>

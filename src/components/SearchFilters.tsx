@@ -7,32 +7,17 @@ interface SearchFiltersProps {
   onQueryChange: (q: string) => void;
   termFilter: string;
   onTermChange: (t: string) => void;
-  topicFilter: string;
-  onTopicChange: (t: string) => void;
+  topicFilter?: string;
+  onTopicChange?: (t: string) => void;
 }
 
-const TERMS = Array.from({ length: 20 }, (_, i) => String(2024 - i));
-const TOPICS = [
-  "All Topics",
-  "First Amendment",
-  "Commerce Clause",
-  "Equal Protection",
-  "Due Process",
-  "Free Speech",
-  "Search and Seizure",
-  "Criminal Procedure",
-  "Federalism",
-  "Privacy",
-  "Voting Rights",
-];
+const TERMS = ["2025", "2024", "2023", "2022", "2021", "2020", "2019", "2018", "2017", "2016", "2015"];
 
 export function SearchFilters({
   query,
   onQueryChange,
   termFilter,
   onTermChange,
-  topicFilter,
-  onTopicChange,
 }: SearchFiltersProps) {
   return (
     <div className="space-y-4">
@@ -54,21 +39,10 @@ export function SearchFilters({
           onChange={(e) => onTermChange(e.target.value)}
           className="rounded-lg border-2 border-ink/10 bg-white px-3 py-2 text-sm text-ink focus:border-gold focus:outline-none"
         >
-          <option value="">All Terms</option>
+          <option value="">All Terms (2015–2025)</option>
           {TERMS.map((t) => (
             <option key={t} value={t}>
               {t} Term
-            </option>
-          ))}
-        </select>
-        <select
-          value={topicFilter}
-          onChange={(e) => onTopicChange(e.target.value)}
-          className="rounded-lg border-2 border-ink/10 bg-white px-3 py-2 text-sm text-ink focus:border-gold focus:outline-none"
-        >
-          {TOPICS.map((t) => (
-            <option key={t} value={t === "All Topics" ? "" : t}>
-              {t}
             </option>
           ))}
         </select>

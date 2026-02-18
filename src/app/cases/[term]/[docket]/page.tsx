@@ -67,7 +67,7 @@ export default function CaseDetailPage({
     return (
       <div className="mx-auto max-w-4xl px-4 py-12 text-center">
         <p className="text-ink/70">Case not found.</p>
-        <Link href="/" className="mt-4 inline-block text-gold hover:underline">
+        <Link href="/cases" className="mt-4 inline-block text-gold hover:underline">
           ← Back to Cases
         </Link>
       </div>
@@ -81,7 +81,7 @@ export default function CaseDetailPage({
   return (
     <div className="mx-auto max-w-4xl px-4 py-8 sm:px-6">
       <Link
-        href="/"
+        href="/cases"
         className="text-sm text-gold hover:underline mb-6 inline-block"
       >
         ← Back to Cases

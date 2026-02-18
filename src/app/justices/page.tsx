@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
+import { JusticeImage } from "@/components/JusticeImage";
 
 interface Justice {
   id: number;
@@ -78,21 +78,7 @@ export default function JusticesPage() {
                     href={`/justices/${j.id}`}
                     className="group rounded-lg border-2 border-ink/10 bg-white p-4 shadow-sm transition-all hover:border-gold/50 hover:shadow-md"
                   >
-                    {j.thumbnail?.href ? (
-                      <div className="relative h-32 w-full overflow-hidden rounded-md bg-ink/5">
-                        <Image
-                          src={j.thumbnail.href}
-                          alt={j.name}
-                          fill
-                          className="object-cover"
-                          unoptimized
-                        />
-                      </div>
-                    ) : (
-                      <div className="flex h-32 items-center justify-center rounded-md bg-ink/5 text-4xl text-ink/30">
-                        ⚖
-                      </div>
-                    )}
+                    <JusticeImage justiceId={j.id} name={j.name} size="sm" className="w-full" />
                     <h3 className="mt-2 font-serif font-semibold text-ink group-hover:text-seal">
                       {j.name}
                     </h3>
@@ -114,24 +100,10 @@ export default function JusticesPage() {
                   href={`/justices/${j.id}`}
                   className="group rounded-lg border-2 border-ink/10 bg-white p-4 shadow-sm transition-all hover:border-gold/50 hover:shadow-md"
                 >
-                  {j.thumbnail?.href ? (
-                    <div className="relative h-32 w-full overflow-hidden rounded-md bg-ink/5">
-                      <Image
-                        src={j.thumbnail.href}
-                        alt={j.name}
-                        fill
-                        className="object-cover"
-                        unoptimized
-                      />
-                    </div>
-                  ) : (
-                    <div className="flex h-32 items-center justify-center rounded-md bg-ink/5 text-4xl text-ink/30">
-                      ⚖
-                    </div>
-                  )}
-                  <h3 className="mt-2 font-serif font-semibold text-ink group-hover:text-seal">
-                    {j.name}
-                  </h3>
+                    <JusticeImage justiceId={j.id} name={j.name} size="sm" className="w-full" />
+                    <h3 className="mt-2 font-serif font-semibold text-ink group-hover:text-seal">
+                      {j.name}
+                    </h3>
                 </Link>
               ))}
             </div>

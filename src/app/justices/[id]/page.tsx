@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
+import { JusticeImage } from "@/components/JusticeImage";
 
 interface JusticeDetail {
   id: number;
@@ -79,21 +79,12 @@ export default function JusticeDetailPage({
 
       <div className="rounded-lg border-2 border-ink/10 bg-white p-6 shadow-sm">
         <div className="flex flex-col sm:flex-row gap-6">
-          {justice.thumbnail?.href ? (
-            <div className="relative h-48 w-48 shrink-0 overflow-hidden rounded-lg bg-ink/5">
-              <Image
-                src={justice.thumbnail.href}
-                alt={justice.name}
-                fill
-                className="object-cover"
-                unoptimized
-              />
-            </div>
-          ) : (
-            <div className="flex h-48 w-48 shrink-0 items-center justify-center rounded-lg bg-ink/5 text-6xl text-ink/30">
-              ⚖
-            </div>
-          )}
+          <JusticeImage
+            justiceId={justice.id}
+            name={justice.name}
+            size="md"
+            className="shrink-0"
+          />
           <div>
             <h1 className="font-serif text-2xl font-bold text-ink md:text-3xl">
               {justice.name}
