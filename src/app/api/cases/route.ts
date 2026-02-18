@@ -14,7 +14,10 @@ export async function GET(request: NextRequest) {
   params.set("page", page);
 
   try {
-    const res = await fetch(`${OYEZ_BASE}/cases?${params}`);
+    const res = await fetch(`${OYEZ_BASE}/cases?${params}`, {
+      next: { revalidate: 3600 },
+      headers: { "User-Agent": "SCOTUS-Encyclopedia/1.0" },
+    });
     if (!res.ok) throw new Error("Oyez API error");
     const data = await res.json();
     return NextResponse.json(data);

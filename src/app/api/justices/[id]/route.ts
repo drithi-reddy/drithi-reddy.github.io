@@ -9,7 +9,9 @@ export async function GET(
   const { id } = await params;
 
   try {
-    const res = await fetch(`${OYEZ_BASE}/people/${id}`);
+    const res = await fetch(`${OYEZ_BASE}/people/${id}`, {
+      headers: { "User-Agent": "SCOTUS-Encyclopedia/1.0" },
+    });
     if (!res.ok) throw new Error("Justice not found");
     const data = await res.json();
     return NextResponse.json(data);

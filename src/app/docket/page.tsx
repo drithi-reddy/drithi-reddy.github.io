@@ -24,7 +24,7 @@ export default function DocketPage() {
     setLoading(true);
     fetch(`/api/cases?term=${currentTerm}&per_page=50`)
       .then((r) => r.json())
-      .then((data) => setCases(Array.isArray(data) ? data : []))
+      .then((data) => setCases(Array.isArray(data) && !data.error ? data : []))
       .catch(() => setCases([]))
       .finally(() => setLoading(false));
   }, [currentTerm]);

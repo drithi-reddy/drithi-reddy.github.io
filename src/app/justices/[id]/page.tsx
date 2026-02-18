@@ -1,6 +1,6 @@
 "use client";
 
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -9,27 +9,43 @@ interface JusticeDetail {
   name: string;
   firstName?: string;
   lastName?: string;
-  href: string;
+  href?: string;
   thumbnail?: { href: string };
   biography?: string;
   nicknames?: string[];
-  positions?: Array<{ title: string; court: { name: string }; date_start: string }>;
+  positions?: Array<{ title: string; court?: { name: string }; date_start: string }>;
 }
+
+const FALLBACK_JUSTICE_DETAILS: Record<number, JusticeDetail> = {
+  1: { id: 1, name: "John Roberts", biography: "John Glover Roberts Jr. is the 17th and current chief justice of the United States. He was nominated by President George W. Bush and took his seat on September 29, 2005.", positions: [{ title: "Chief Justice", court: { name: "Supreme Court of the United States" }, date_start: "2005" }] },
+  2: { id: 2, name: "Clarence Thomas", biography: "Clarence Thomas is an associate justice of the Supreme Court. He was nominated by President George H. W. Bush and took his seat on October 23, 1991.", positions: [{ title: "Associate Justice", court: { name: "Supreme Court of the United States" }, date_start: "1991" }] },
+  3: { id: 3, name: "Samuel Alito", biography: "Samuel Anthony Alito Jr. is an associate justice of the Supreme Court. He was nominated by President George W. Bush and took his seat on January 31, 2006.", positions: [{ title: "Associate Justice", court: { name: "Supreme Court of the United States" }, date_start: "2006" }] },
+  4: { id: 4, name: "Sonia Sotomayor", biography: "Sonia Maria Sotomayor is an associate justice of the Supreme Court. She was nominated by President Barack Obama and took her seat on August 8, 2009.", positions: [{ title: "Associate Justice", court: { name: "Supreme Court of the United States" }, date_start: "2009" }] },
+  5: { id: 5, name: "Elena Kagan", biography: "Elena Kagan is an associate justice of the Supreme Court. She was nominated by President Barack Obama and took her seat on August 7, 2010.", positions: [{ title: "Associate Justice", court: { name: "Supreme Court of the United States" }, date_start: "2010" }] },
+  6: { id: 6, name: "Neil Gorsuch", biography: "Neil Gorsuch is an associate justice of the Supreme Court. He was nominated by President Donald Trump and took his seat on April 10, 2017.", positions: [{ title: "Associate Justice", court: { name: "Supreme Court of the United States" }, date_start: "2017" }] },
+  7: { id: 7, name: "Brett Kavanaugh", biography: "Brett Kavanaugh is an associate justice of the Supreme Court. He was nominated by President Donald Trump and took his seat on October 6, 2018.", positions: [{ title: "Associate Justice", court: { name: "Supreme Court of the United States" }, date_start: "2018" }] },
+  8: { id: 8, name: "Amy Coney Barrett", biography: "Amy Coney Barrett is an associate justice of the Supreme Court. She was nominated by President Donald Trump and took her seat on October 27, 2020.", positions: [{ title: "Associate Justice", court: { name: "Supreme Court of the United States" }, date_start: "2020" }] },
+  9: { id: 9, name: "Ketanji Brown Jackson", biography: "Ketanji Brown Jackson is an associate justice of the Supreme Court. She was nominated by President Joe Biden and took her seat on June 30, 2022.", positions: [{ title: "Associate Justice", court: { name: "Supreme Court of the United States" }, date_start: "2022" }] },
+};
 
 export default function JusticeDetailPage({
   params,
 }: {
-  params: Promise<{ id: string }>;
+  params: { id: string };
 }) {
-  const { id } = use(params);
+  const { id } = params;
   const [justice, setJustice] = useState<JusticeDetail | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    const fallback = FALLBACK_JUSTICE_DETAILS[parseInt(id, 10)];
     fetch(`/api/justices/${id}`)
       .then((r) => r.json())
-      .then(setJustice)
-      .catch(() => setJustice(null))
+      .then((data) => {
+        if (data && data.error) setJustice(fallback ?? null);
+        else setJustice(data);
+      })
+      .catch(() => setJustice(fallback ?? null))
       .finally(() => setLoading(false));
   }, [id]);
 

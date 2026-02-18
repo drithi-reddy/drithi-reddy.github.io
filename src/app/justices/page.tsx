@@ -102,6 +102,7 @@ export default function JusticesPage() {
             </section>
           )}
 
+          {formerJustices.length > 0 && (
           <section>
             <h2 className="mb-4 text-xl font-semibold text-ink border-b-2 border-gold/50 pb-2">
               Former Justices
@@ -135,6 +136,7 @@ export default function JusticesPage() {
               ))}
             </div>
           </section>
+          )}
         </div>
       )}
     </div>

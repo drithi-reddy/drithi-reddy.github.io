@@ -28,7 +28,7 @@ export function CaseCard({ id, name, citation, term, docket }: CaseCardProps) {
   };
 
   const citeStr = citation
-    ? `${citation.volume} U.S. ${citation.page} (${citation.year})`
+    ? `${citation.volume} U.S. ${citation.page ?? "—"} (${citation.year})`
     : "—";
 
   return (

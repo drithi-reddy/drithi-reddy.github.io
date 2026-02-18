@@ -27,7 +27,8 @@ export default function TimelinePage() {
       .then((results) => {
         const byTerm: Record<string, OyezCase[]> = {};
         terms.forEach((t, i) => {
-          byTerm[t] = Array.isArray(results[i]) ? results[i] : [];
+          const r = results[i];
+          byTerm[t] = Array.isArray(r) && !r?.error ? r : [];
         });
         setCasesByTerm(byTerm);
       })
@@ -110,7 +111,7 @@ export default function TimelinePage() {
               </h3>
               <p className="mt-1 text-sm text-ink/70">
                 {c.citation
-                  ? `${c.citation.volume} U.S. ${c.citation.page} (${c.citation.year})`
+                  ? `${c.citation.volume} U.S. ${c.citation.page ?? "—"} (${c.citation.year})`
                   : c.term}
               </p>
             </Link>

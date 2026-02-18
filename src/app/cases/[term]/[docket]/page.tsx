@@ -1,6 +1,6 @@
 "use client";
 
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Bookmark, BookmarkCheck, ExternalLink } from "lucide-react";
 import { followCase, unfollowCase, isCaseFollowed } from "@/lib/followed-cases";
@@ -23,9 +23,9 @@ interface CaseDetail {
 export default function CaseDetailPage({
   params,
 }: {
-  params: Promise<{ term: string; docket: string }>;
+  params: { term: string; docket: string };
 }) {
-  const { term, docket } = use(params);
+  const { term, docket } = params;
   const [caseData, setCaseData] = useState<CaseDetail | null>(null);
   const [loading, setLoading] = useState(true);
   const [followed, setFollowed] = useState(false);
@@ -36,7 +36,10 @@ export default function CaseDetailPage({
     setLoading(true);
     fetch(`/api/cases/${term}/${docket}`)
       .then((r) => r.json())
-      .then(setCaseData)
+      .then((data) => {
+        if (data && data.error) setCaseData(null);
+        else setCaseData(data);
+      })
       .catch(() => setCaseData(null))
       .finally(() => setLoading(false));
   }, [term, docket]);
@@ -72,7 +75,7 @@ export default function CaseDetailPage({
   }
 
   const citeStr = caseData.citation
-    ? `${caseData.citation.volume} U.S. ${caseData.citation.page} (${caseData.citation.year})`
+    ? `${caseData.citation.volume} U.S. ${caseData.citation.page ?? "—"} (${caseData.citation.year})`
     : null;
 
   return (

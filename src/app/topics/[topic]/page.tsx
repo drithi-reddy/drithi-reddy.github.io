@@ -1,6 +1,6 @@
 "use client";
 
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { CaseCard } from "@/components/CaseCard";
 
@@ -15,9 +15,9 @@ interface OyezCase {
 export default function TopicPage({
   params,
 }: {
-  params: Promise<{ topic: string }>;
+  params: { topic: string };
 }) {
-  const { topic } = use(params);
+  const { topic } = params;
   const [cases, setCases] = useState<OyezCase[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -46,7 +46,7 @@ export default function TopicPage({
     fetch(`/api/cases?per_page=200`)
       .then((r) => r.json())
       .then((data) => {
-        const list = Array.isArray(data) ? data : [];
+        const list = Array.isArray(data) && !data.error ? data : [];
         const filtered = list.filter((c) =>
           kws.some((kw) => c.name?.toLowerCase().includes(kw))
         );

@@ -28,7 +28,7 @@ export default function HomePage() {
       if (termFilter) params.set("term", termFilter);
       const res = await fetch(`/api/cases?${params}`);
       const data = await res.json();
-      setCases(Array.isArray(data) ? data : []);
+      setCases(Array.isArray(data) && !data.error ? data : []);
     } catch {
       setCases([]);
     } finally {
