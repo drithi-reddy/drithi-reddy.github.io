@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { JUSTICE_IMAGES } from "@/lib/justice-images";
 import { useState } from "react";
 
@@ -33,14 +32,14 @@ export function JusticeImage({ justiceId, name, size = "md", className = "" }: J
 
   return (
     <div className={`relative overflow-hidden rounded-md bg-ink/5 ${sizeClasses[size] || sizeClasses.md} ${className}`}>
-      <Image
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
         src={src}
         alt={name}
-        fill
-        className="object-cover object-top"
-        sizes={size === "lg" ? "256px" : size === "md" ? "192px" : "100%"}
+        className="h-full w-full object-cover object-top"
         onError={() => setError(true)}
-        unoptimized
+        referrerPolicy="no-referrer"
+        loading="lazy"
       />
     </div>
   );
