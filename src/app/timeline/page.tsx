@@ -28,7 +28,7 @@ export default function TimelinePage() {
         const byTerm: Record<string, OyezCase[]> = {};
         terms.forEach((t, i) => {
           const r = results[i];
-          byTerm[t] = Array.isArray(r) && !r?.error ? r : [];
+          byTerm[t] = Array.isArray(r) && !("error" in (r as object)) ? r : [];
         });
         setCasesByTerm(byTerm);
       })

@@ -46,7 +46,7 @@ export default function TopicPage({
     fetch(`/api/cases?per_page=200`)
       .then((r) => r.json())
       .then((data) => {
-        const list = Array.isArray(data) && !data.error ? data : [];
+        const list = Array.isArray(data) && !("error" in (data as object)) ? data : [];
         const filtered = list.filter((c) =>
           kws.some((kw) => c.name?.toLowerCase().includes(kw))
         );
